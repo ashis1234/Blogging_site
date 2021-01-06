@@ -1,0 +1,13 @@
+{% extends 'bash.html' %}
+{%block title%}Create profile Page{% endblock %}
+{% block content %}
+
+<h1>Create Profile Page.......</h1>
+<br/>
+<br/>
+<form method = 'POST'>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit" class="btn btn-success">Update</button>
+</form>
+{% endblock %}

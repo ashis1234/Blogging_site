@@ -1,0 +1,98 @@
+{% extends 'bash.html' %}
+{% load static %}
+
+{%block title%}{{post.title_tag}}{% endblock %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+<small>By : {{post.author.first_name}} {{post.author.last_name}}- {{post.post_date}} - {{post.category}}
+{% if user.is_authenticated and user.id == post.author.id %}
+	- [<a href = "{% url 'update_post' post.pk %}">Edit</a> ,
+<a href = "{% url 'delete_post' post.pk %}">Delete</a>]
+{% endif %}
+<hr>
+{% if post.header_image %}
+	<img src="{{ post.header_image.url }}">
+{% endif %}
+{{post.body | safe}}
+</small>
+<br><br>
+<a href="{% url 'home'%}" class="btn btn-secondary">back</a>
+<br/>
+<hr/>
+<form action="{% url 'like_post' post.pk %}" class="form-group" method="POST">
+	{% csrf_token %}
+	{% if user.is_authenticated %}
+		<button type="submit" name = 'post_id' value ="{{post.id}}" class="btn btn-primary bt-sm">Like</button>
+	{% else %}
+		<small>Login first to like the post.........</small>
+	{% endif %}
+</form>
+<form action="{% url 'dislike_post' post.pk %}" class="form-group" method="POST">
+	{% csrf_token %}
+	{% if user.is_authenticated %}
+		<button type="submit" name = 'post_id1' value ="{{post.id}}" class="btn btn-danger bt-sm">UnLike</button>
+	{% else %}
+		<small>Login first to Dislike the post.........</small>
+	{% endif %}
+</form>
+<strong>Contribution:{{total_likes}}</strong>
+
+
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+    	{% if post.author.profile.pic %}
+      		<img src="{{post.author.profile.pic.url}}" class="card-img" width="100" height="200">
+      	{% else %}
+      		<img src="{% static 'images/ashis.jpg'%}" class="card-img" width="100" height="200">
+      	{% endif %}
+    
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{post.author.first_name}} {{post.author.last_name}}</h5>
+        <p>
+        	{% if post.author.profile.website_url %}
+        		<a href="{{post.author.profile.website_url}}">Website</a> |
+        	{% endif %}
+        	{% if post.author.profile.facebook_url %}
+        		<a href="{{post.author.profile.facebook_url}}">Facebook</a> |
+        	{% endif %}
+        	{% if post.author.profile.linkdin_url %}
+        		<a href="{{post.author.profile.linkdin_url}}">Linkdin</a> |
+        	{% endif %}
+        	{% if post.author.profile.github_url %}
+        		<a href="{{post.author.profile.github_url}}">Github</a> |
+        	{% endif %}
+        	{% if post.author.profile.instagram_url %}
+        		<a href="{{post.author.profile.instagram_url}}">Instagram</a> |
+        	{% endif %}
+        	{% if post.author.profile.twiter_url %}
+        		<a href="{{post.author.profile.twiter_url}}">Twiter</a> |
+        	{% endif %}
+        </p>
+        <p class="card-text">{{post.author.profile.bio}}</p>
+     </div>
+    </div>
+  </div>
+</div>
+<br/>
+<h1>Comments........</h1>
+<hr/>
+{% if not post.comments.all%}
+  No comments yet.....<a href="#"> Add One</a>
+{% else %}
+  {% for comment in post.comments.all %}
+    <strong>
+      {{comment.name}} - {{comment.date_added}}<br>
+    </strong>
+    {{comment.body}}
+    <br/>
+  {% endfor %}
+  <br>
+  <a href="#"> Add Comment</a>
+{% endif %}
+<hr/>
+
+
+{% endblock %}

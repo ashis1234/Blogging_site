@@ -1,0 +1,18 @@
+{% extends 'bash.html' %}
+{%block title%}Delete Post{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Delete Post.......</h1>
+<br/>
+<h2>Delete : {{post.title}}</h2>
+<br> 
+<form method = 'Post'>
+{% csrf_token %}
+<small>Are sure you want to delete ?</small>
+<button type="submit" class="btn btn-warning">Delete Post</button>
+<a href="{% url 'home'%}" class="btn btn-secondary">Back to Home</a>
+</form>
+{% else %}
+You're not allowed to access this site.....
+{% endif %}
+{% endblock %}

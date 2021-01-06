@@ -1,0 +1,24 @@
+{% extends 'bash.html' %}
+{% block content %}
+
+<ul>
+{% if category_post %}
+<h1>{{cats}}</h1>
+{% for post in category_post %}
+<li><a href = "{% url 'article' post.pk %}">{{ post.title }}</a>
+ - 	{{post.author}} - {{post.post_date}}
+{% if user.is_authenticated %}
+	{% if post.author == request.user %}
+		- [<a href = "{% url 'update_post' post.pk %}">Edit</a> ,
+	<a href = "{% url 'delete_post' post.pk %}">Delete</a>]
+	{% endif %}
+{% endif %}
+<br/>
+{{ post.body|slice:":200" |safe}}
+</li>
+{% endfor %}
+</ul>
+{% else %}
+Sorry Page does not exists...........
+{% endif %}
+{% endblock %}

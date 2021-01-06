@@ -1,0 +1,44 @@
+{% extends 'bash.html' %}
+
+{%block title%}Profile of {{profile_user}} {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+    	{% if profile_user.pic %}
+      		<img src="{{profile_user.pic.url}}" class="card-img" width="100" height="200">
+      {% else %}
+      		<img src="{% static 'images/gorilla.png'%}" class="card-img" width="100" height="200">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{profile_user}}</h5>
+        <p>
+        	{% if profile_user.website_url %}
+        		<a href="{{profile_user.website_url}}">Website</a> |
+        	{% endif %}
+        	{% if profile_user.facebook_url %}
+        		<a href="{{profile_user.facebook_url}}">Facebook</a> |
+        	{% endif %}
+        	{% if profile_user.linkdin_url %}
+        		<a href="{{profile_user.linkdin_url}}">Linkdin</a> |
+        	{% endif %}
+        	{% if profile_user.github_url %}
+        		<a href="{{profile_user.github_url}}">Github</a> |
+        	{% endif %}
+        	{% if profile_user.instagram_url %}
+        		<a href="{{profile_user.instagram_url}}">Instagram</a> |
+        	{% endif %}
+        	{% if profile_user.twiter_url %}
+        		<a href="{{profile_user.twiter_url}}">Twiter</a> |
+        	{% endif %}
+        </p>
+        <p class="card-text">{{profile_user.bio}}</p>
+     </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

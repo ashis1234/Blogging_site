@@ -1,0 +1,21 @@
+{% extends 'bash.html' %}
+{%block title%}Add New Post{% endblock %}
+{% block content %}
+
+<h1>ADd Post.......</h1>
+<br/><br/>
+{% if user.is_authenticated %}
+<form method = 'Post' class="form-group" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.media }}
+{{ form.as_p }}
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
+<script>
+	var name = "{{user.id}}";
+	document.getElementById('elder').value = name;
+</script>
+{% else %}
+<a href="{%url 'login' %}" class="btn btn-secondary">Login first</a>
+{% endif %}
+{% endblock %}

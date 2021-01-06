@@ -1,0 +1,17 @@
+{% extends 'bash.html' %}
+{%block title%}Update Post{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Update Post.......</h1>
+<form method = 'Post'>
+{% csrf_token %}
+{{ form.media }}
+{{ form.as_p }}
+<button type="submit" class="btn btn-success">Submit</button>
+<a href="{% url 'home'%}" class="btn btn-secondary">back</a>
+{% else %}
+You're not allowed to access this site.....
+{% endif %}
+</form>
+
+{% endblock %}
